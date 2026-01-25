@@ -1,53 +1,279 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>My Website</title>
-    <style>
-        /* Navigation Bar Style */
-        nav {
-            background-color: #333;
-            padding: 10px;
-        }
-        nav a {
-            color: white;
-            margin: 15px;
-            text-decoration: none;
-            font-weight: bold;
-        }
-        nav a:hover {
-            color: #ff9800;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MERN Stack Developer Portfolio</title>
 
-        /* Footer Style */
-        footer {
-            background-color: #333;
-            color: white;
-            padding: 15px;
-            text-align: center;
-            margin-top: 40px;
-        }
-    </style>
+<style>
+:root{
+  --bg:#0e0e0e;
+  --card:#1a1a1a;
+  --orange:#ff8c1a;
+  --text:#ffffff;
+  --muted:#a0a0a0;
+}
+*{margin:0;padding:0;box-sizing:border-box;font-family:Segoe UI,sans-serif;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);}
+
+/* ===== NAVBAR ===== */
+header{position:sticky;top:0;background:#0b0b0b;z-index:1000;}
+nav{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:18px 8%;
+}
+.logo{font-size:24px;font-weight:bold;color:var(--orange);}
+.menu{display:flex;gap:30px;align-items:center;}
+.menu a{color:#ccc;text-decoration:none;}
+.menu a:hover{color:var(--orange);}
+.nav-btn{background:var(--orange);border:none;padding:8px 18px;border-radius:6px;}
+.toggle{display:none;font-size:26px;cursor:pointer;}
+
+/* ===== HERO ===== */
+.hero{
+  padding:80px 8%;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  flex-wrap:wrap;
+}
+.hero-text h1{font-size:48px;}
+.hero-text span{color:var(--orange);}
+.hero-text p{color:var(--muted);margin:10px 0;}
+.hero-btns{margin:25px 0;display:flex;gap:15px;}
+.hero-btns button{
+  padding:10px 22px;
+  border-radius:6px;
+  border:1px solid var(--orange);
+  cursor:pointer;
+}
+.hire{background:var(--orange);}
+.cv{background:transparent;color:#fff;}
+
+.stats{
+  background:var(--card);
+  display:flex;
+  gap:30px;
+  padding:20px;
+  border-radius:10px;
+}
+.stat h2{color:var(--orange);}
+
+.hero-img .circle{
+  width:320px;height:320px;border-radius:50%;
+  background:radial-gradient(circle, rgba(255,140,26,.6), transparent 70%);
+  display:flex;align-items:center;justify-content:center;
+}
+.hero-img img{width:240px;border-radius:50%;}
+
+/* ===== SERVICES ===== */
+section{padding:80px 8%;text-align:center;}
+.service-grid{
+  margin-top:40px;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:25px;
+}
+.card{
+  background:var(--card);
+  padding:30px;
+  border-radius:16px;
+  transition:.4s;
+}
+.card:hover{
+  transform:translateY(-10px);
+  box-shadow:0 10px 30px rgba(255,140,26,.25);
+}
+.card h3{color:var(--orange);margin-bottom:10px;}
+.card p{color:#aaa;font-size:14px;}
+
+/* ===== SKILLS ===== */
+.skills-box{max-width:800px;margin:40px auto;text-align:left;}
+.skill-group{
+  margin:40px 0 15px;
+  color:var(--orange);
+  font-size:18px;
+}
+.skill{margin-bottom:20px;}
+.skill-title{display:flex;justify-content:space-between;font-size:14px;margin-bottom:8px;}
+.bar{height:10px;background:#2a2a2a;border-radius:10px;overflow:hidden;}
+.fill{
+  height:100%;
+  width:0;
+  background:linear-gradient(90deg,var(--orange),#ffb266);
+  border-radius:10px;
+  transition:1.5s;
+}
+
+/* ===== FOOTER ===== */
+footer{
+  background:#0a0a0a;
+  padding:60px 8% 20px;
+}
+.footer-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:40px;
+}
+.footer-grid h3{color:var(--orange);margin-bottom:15px;}
+.footer-grid a,.footer-grid p{
+  color:#aaa;
+  text-decoration:none;
+  display:block;
+  font-size:14px;
+  margin-bottom:8px;
+}
+.footer-bottom{
+  border-top:1px solid #222;
+  margin-top:30px;
+  padding-top:15px;
+  text-align:center;
+  font-size:13px;
+  color:#777;
+}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:900px){
+  .menu{
+    position:absolute;
+    top:70px;right:8%;
+    background:#111;
+    flex-direction:column;
+    width:200px;
+    padding:20px;
+    border-radius:10px;
+    display:none;
+  }
+  .menu.active{display:flex;}
+  .toggle{display:block;}
+}
+</style>
 </head>
+
 <body>
 
-    <!-- Navigation Menu -->
-    <nav>
-        <a href="#">Home</a>
-        <a href="#">About</a>
-        <a href="#">Services</a>
-        <a href="#">Contact</a>
-    </nav>
+<header>
+<nav>
+  <div class="logo">PORTFOLIO</div>
+  <div class="toggle" onclick="menuToggle()">☰</div>
+  <div class="menu" id="menu">
+    <a href="#">Home</a>
+    <a href="#services">Services</a>
+    <a href="#skills">Skills</a>
+    <a href="#">Portfolio</a>
+    <a href="#">Contact</a>
+    <button class="nav-btn">Hire Me</button>
+  </div>
+</nav>
+</header>
 
-    <h1>Welcome to My Website</h1>
-    <p>This is an example website with a menu and footer.</p>
+<section class="hero">
+<div class="hero-text">
+  <p>Hi I am</p>
+  <h1>Muhammad ismail<br><span>MERN Stack Developer</span></h1>
 
-    <!-- Footer -->
-    <footer>
-        © 2025 My Website | All Rights Reserved
-    </footer>
+  <div class="hero-btns">
+    <button class="hire">Hire Me</button>
+    <button class="cv">Download CV</button>
+  </div>
 
-    <h1>hello ismail</h1>
-    <h2>hjhjkkjj</h2>
-S
+  <div class="stats">
+    <div class="stat"><h2>5+</h2><p>Experience</p></div>
+    <div class="stat"><h2>20+</h2><p>Projects</p></div>
+    <div class="stat"><h2>80+</h2><p>Clients</p></div>
+  </div>
+</div>
+
+<div class="hero-img">
+  <div class="circle">
+    <img src="https://avatars.githubusercontent.com/u/239330382?s=400&u=3bfaf3f287b73d76ef90a3757859ed77e3b6dc7e&v=4">
+  </div>
+</div>
+</section>
+
+<section id="services">
+<h2>Services</h2>
+<p>Modern MERN Stack solutions</p>
+
+<div class="service-grid">
+  <div class="card"><h3>Frontend</h3><p>React.js UI Development</p></div>
+  <div class="card"><h3>Backend</h3><p>Node.js & Express APIs</p></div>
+  <div class="card"><h3>Database</h3><p>MongoDB Integration</p></div>
+  <div class="card"><h3>Deployment</h3><p>Vercel & Render</p></div>
+</div>
+</section>
+
+<section id="skills">
+<h2>MERN Stack Skills</h2>
+<p>Technologies I work with</p>
+
+<div class="skills-box">
+
+<h3 class="skill-group">Frontend</h3>
+<div class="skill"><div class="skill-title"><span>HTML</span><span>95%</span></div><div class="bar"><div class="fill" data-width="95%"></div></div></div>
+<div class="skill"><div class="skill-title"><span>CSS</span><span>90%</span></div><div class="bar"><div class="fill" data-width="90%"></div></div></div>
+<div class="skill"><div class="skill-title"><span>JavaScript</span><span>88%</span></div><div class="bar"><div class="fill" data-width="88%"></div></div></div>
+<div class="skill"><div class="skill-title"><span>React.js</span><span>85%</span></div><div class="bar"><div class="fill" data-width="85%"></div></div></div>
+
+<h3 class="skill-group">Backend</h3>
+<div class="skill"><div class="skill-title"><span>Node.js</span><span>82%</span></div><div class="bar"><div class="fill" data-width="82%"></div></div></div>
+<div class="skill"><div class="skill-title"><span>Express.js</span><span>80%</span></div><div class="bar"><div class="fill" data-width="80%"></div></div></div>
+
+<h3 class="skill-group">Database & Tools</h3>
+<div class="skill"><div class="skill-title"><span>MongoDB</span><span>78%</span></div><div class="bar"><div class="fill" data-width="78%"></div></div></div>
+<div class="skill"><div class="skill-title"><span>Git & GitHub</span><span>85%</span></div><div class="bar"><div class="fill" data-width="85%"></div></div></div>
+
+</div>
+</section>
+
+<footer>
+<div class="footer-grid">
+  <div>
+    <h3>About</h3>
+    <p>MERN Stack Developer building scalable web apps.</p>
+  </div>
+  <div>
+    <h3>Quick Links</h3>
+    <a href="#">Home</a>
+    <a href="#services">Services</a>
+    <a href="#skills">Skills</a>
+    <a href="#">Contact</a>
+  </div>
+  <div>
+    <h3>Services</h3>
+    <a href="#">React Development</a>
+    <a href="#">API Development</a>
+    <a href="#">MongoDB</a>
+  </div>
+  <div>
+    <h3>Follow</h3>
+    <a href="#">🌐 Website</a>
+    <a href="#">🐦 Twitter</a>
+    <a href="#">📘 Facebook</a>
+  </div>
+</div>
+
+<div class="footer-bottom">
+© 2026 Muhammad ismail | All Rights Reserved
+</div>
+</footer>
+
+<script>
+function menuToggle(){
+  document.getElementById("menu").classList.toggle("active");
+}
+
+window.addEventListener("scroll",()=>{
+  document.querySelectorAll(".fill").forEach(bar=>{
+    if(bar.getBoundingClientRect().top < window.innerHeight-100){
+      bar.style.width = bar.dataset.width;
+    }
+  });
+});
+</script>
+
 </body>
 </html>
